@@ -69,12 +69,177 @@ if (isset($_SESSION["uid"])) {
         Logout
       </a>
     </nav>
-    <section class="main">
+    <!--<section class="main">
       <h1 class="empty">No active requests</h1>
-    </section>
+    </section>-->
+    <section class="main">
+            <div class="info">
+            <h1 class="empty">No active requests</h1>
+            </div>
+        </section>
+
     <script>
+
+      /*window.onload = function() {
+                    var hos = 'Chettinad Health Centre';
+
+                    function makeRequest(url, callback) {
+                        var request;
+                        if (window.XMLHttpRequest) {
+                            request = new XMLHttpRequest(); // IE7+, Firefox, Chrome, Opera, Safari
+                        } else {
+                            request = new ActiveXObject("Microsoft.XMLHTTP"); // IE6, IE5
+                        }
+                        request.onreadystatechange = function() {
+                            if (request.readyState == 4 && request.status == 200) {
+                                callback(request);
+                            }
+                        }
+                        request.open("GET", url, true);
+                        request.send();
+                    }
+                    makeRequest("get_status.php?q=" + hos , function(data) {
+                            var data = JSON.parse(data.responseText);
+                            const emptyHeader = document.querySelector('.info')
+                            if (data !== null) emptyHeader.remove()
+                            const docElem = document.querySelector('.main')
+                            data.forEach(function(row) {
+                            docElem.insertAdjacentHTML(
+                                'beforeend',
+                                `   <div class="card">
+                                        <div class="bottom-row">
+                                            <div class="field">
+                                            <span class="bold">Driver Assigned:</span>
+                                            <span>${data.driver_name}</span>
+                                            </div>
+                                            <div class="field">
+                                            <span class="bold">Vehicle Registration:</span>
+                                            <span>${data.ambulance_Registration}</span>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-row">
+                                            <div class="field">
+                                            <span class="bold">Patient Name:</span>
+                                            <span>${data.PatientName}</span>
+                                            </div>
+                                            <div class="field">
+                                            <span class="bold">Mobile Number:</span>
+                                            <span>${data.PatientMob}</span>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-row">
+                                            <div class="field">
+                                            <span class="bold">Emergency:</span>
+                                            <span>${data.Type}</span>
+                                            </div>
+                                            <div class="field">
+                                            <button id="executeQueryButton">Delete</button>
+                                            </div>
+                                        </div>
+                                        </div>`
+                            )
+                            docElem.classList.add('modify')
+                            })
+                            
+                        });
+                        
+                            
+    };*/
+    window.onload = function() {
+    var hos = 'Chettinad Health Centre';
+
+    function makeRequest(url, callback) {
+        var request;
+        if (window.XMLHttpRequest) {
+            request = new XMLHttpRequest(); // IE7+, Firefox, Chrome, Opera, Safari
+        } else {
+            request = new ActiveXObject("Microsoft.XMLHTTP"); // IE6, IE5
+        }
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {
+                callback(request);
+            }
+        }
+        request.open("GET", url, true);
+        request.send();
+    }
+
+    function deleteCard(cardId) {
+        var request;
+        if (window.XMLHttpRequest) {
+            request = new XMLHttpRequest(); // IE7+, Firefox, Chrome, Opera, Safari
+        } else {
+            request = new ActiveXObject("Microsoft.XMLHTTP"); // IE6, IE5
+        }
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {
+                var card = document.getElementById(cardId);
+                card.parentNode.removeChild(card);
+            }
+        }
+        request.open("GET", "delete_card.php?q=" + cardId, true);
+        request.send();
+    }
+
+    makeRequest("get_status.php?q=" + hos , function(data) {
+        var data = JSON.parse(data.responseText);
+        const emptyHeader = document.querySelector('.info')
+        if (data !== null) emptyHeader.remove()
+        const docElem = document.querySelector('.main')
+        data.forEach(function(row) {
+            docElem.insertAdjacentHTML(
+                'beforeend',
+                `   <div class="card" id="card-${row.driver_name}">
+                        <div class="bottom-row">
+                            <div class="field">
+                                <span class="bold">Driver Assigned:</span>
+                                <span>${row.driver_name}</span>
+                            </div>
+                            <div class="field">
+                                <span class="bold">Vehicle Registration:</span>
+                                <span>${row.ambulance_Registration}</span>
+                            </div>
+                        </div>
+                        <div class="bottom-row">
+                            <div class="field">
+                                <span class="bold">Patient Name:</span>
+                                <span>${row.PatientName}</span>
+                            </div>
+                            <div class="field">
+                                <span class="bold">Mobile Number:</span>
+                                <span>${row.PatientMob}</span>
+                            </div>
+                        </div>
+                        <div class="bottom-row">
+                            <div class="field">
+                                <span class="bold">Emergency:</span>
+                                <span>${row.Type}</span>
+                            </div>
+                            <div class="field">
+                                <button class="delete-button" data-card-id="${row.driver_name}">Delete</button>
+                            </div>
+                        </div>
+                    </div>`
+            )
+            docElem.classList.add('modify')
+        })
+
+        // Add event listeners to delete buttons
+        var deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var cardId = button.getAttribute('data-card-id');
+                deleteCard(cardId);
+            });
+        });
+    });
+};
+
+    
+    </script>
+    <!--<script>
       // Create a new WebSocket.
-      console.log('about to establish web socket connection')
+      /*console.log('about to establish web socket connection')
 
       var socket = new WebSocket('ws://localhost:8080')
 
@@ -90,13 +255,10 @@ if (isset($_SESSION["uid"])) {
         socket.send(JSON.stringify(message))
       }
 
-      // Define the
+      // Define the*/
+      
 
-      function transmitMessage() {
-        //socket.send(JSON.stringify(message))
-      }
-
-      socket.onmessage = function(e) {
+      /*socket.onmessage = function(e) {
         console.log(e.data)
         var object = JSON.parse(e.data)
         const emptyHeader = document.querySelector('.empty')
@@ -145,12 +307,12 @@ if (isset($_SESSION["uid"])) {
           </div>
         </div>
       </div>`)
-      }
+      }*/
 
       document.getElementById('myButton').onclick = function() {
         location.href = 'http://3007f8e97f51.ngrok.io/MapsBackUp.html'
       }
-    </script>
+    </script>-->
   </body>
 
   </html>

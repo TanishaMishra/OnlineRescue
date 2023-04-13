@@ -65,7 +65,7 @@ if (isset($_SESSION["uid"])) {
     <html lang="en">
 
     <head>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHMeZx8lHD3SsFLYDr_8roet4BmAwx5MI&callback=myMap"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=&callback=myMap"></script>
         <meta charset="utf-8" />
         <title>Location Fetch</title>
         <link rel="stylesheet" href="./assets/css/location.css">
@@ -314,12 +314,12 @@ if (isset($_SESSION["uid"])) {
     <body onload="init();">
         <form id="services" method="POST" action="patientsIndex.php">
             <h3>Updating Your Location</h3>
-            <span>Location:</span><input name="location" type="text" id="start" value="Vellore Institute of Technology" />
-            <span>City:</span><input name="city" type="text" id="city" value="Vellore" />
-            <span>State:</span><input name="state" type="text" id="state" value="Tamil Nadu" />
+            <span>Location:</span><input name="location" type="text" id="start" value="SJT, Vellore Institute of Technology, Tiruvalam Rd, Katpadi" readonly/>
+            <span>City:</span><input name="city" type="text" id="city" value="Katpadi" readonly/>
+            <span>State:</span><input name="state" type="text" id="state" value="Tamil Nadu" readonly/>
             <span>Destination:</span><select name="destination" id="destination" onchange="return gethos()">
             <option>Chettinad Health Centre-1.1 km - 5 mins</option>
-            <option>Free Medical Hospital-1.5 km - 6 mins</option>
+            <option>Naruvi Hospital-7.6 km - 16 mins</option>
         </select>
             <input type="text" style="display:none" readonly id="hos" name="hos" />
             <button type="submit">Enter Patient Details</button>

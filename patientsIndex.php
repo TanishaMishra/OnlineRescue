@@ -112,7 +112,7 @@ $hospital = $_POST['destination'];
                     // Create a new WebSocket.
                     console.log("about to establish web socket connection");
 
-                    var socket = new WebSocket('ws://localhost:8080');
+                    var socket = new WebSocket('ws://http://localhost/Webulance');
 
                     socket.onopen = function(e) {
                         console.log("Connection established!");
@@ -120,15 +120,16 @@ $hospital = $_POST['destination'];
                     };
 
                     // Define the 
-                    var HospitalName = '<?php echo $hospital; ?>';
-                    var Username = '<?php echo $_SESSION["uid"]; ?>';
-                    var Location = '<?php echo $address; ?>';
-                    var hos = '<?php echo $hos; ?>';
+                    //var HospitalName = '<?php echo $hospital; ?>';
+                    //var Username = '<?php echo $_SESSION["uid"]; ?>';
+                    //var Location = '<?php echo $address; ?>';
+                    //var hos = '<?php echo $hos; ?>';
 
-                    //var HospitalName = 'Chettinad Health Centre';
-                    //var Username = 1;
-                    //var Location = 'Vellore Institute of Technology';
-                    //var hos = 1;
+                    var HospitalName = 'Chettinad Health Centre';
+                    var Username = 1;
+                    var Location = 'Vellore Institute of Technology';
+                    var hos = 1;
+                    
 
                     function makeRequest(url, callback) {
                         var request;
@@ -148,12 +149,14 @@ $hospital = $_POST['destination'];
 
                     function transmitMessage() {
                         const patName = document.querySelector('#pat-name').value;
+                        
+                        const tvalue = document.querySelector('#EmergencyType').value;
                         if(patName.split(/\W+/).length !== 2 || patName.length == 0) {
                             //window.alert("Please enter the full name of the patient to be admitted");
                             window.alert(hos);
                             return;
                         }
-                        makeRequest("get_ambulance.php?q=" + HospitalName + "&r=" + Username, function(data) {
+                        makeRequest("get_ambulance.php?q=" + HospitalName + "&r=" + Username + "&s=" + tvalue , function(data) {
                             var data = JSON.parse(data.responseText);
                             const emptyHeader = document.querySelector('.info')
                             if (emptyHeader !== null) emptyHeader.remove()
@@ -188,7 +191,7 @@ $hospital = $_POST['destination'];
                                             </div>
                                             <div class="field">
                                             <span class="bold">Hospital Name:</span>
-                                            <span>${'<?php echo $hospital; ?>'}</span>
+                                            <span>${HospitalName}</span>
                                             </div>
                                         </div>
                                         </div>`
