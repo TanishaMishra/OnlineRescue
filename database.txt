@@ -1,0 +1,78 @@
+AmbulanceDetails 
+
+CREATE TABLE `AmbulanceDetails` (
+  `amb_id` int NOT NULL AUTO_INCREMENT,
+  `amb_hos_id` int NOT NULL,
+  `amb_reg_no` char(10) NOT NULL,
+  `amb_driver` varchar(20) NOT NULL,
+  `amb_status` enum('on_duty','off_duty','repaired') DEFAULT NULL,
+  PRIMARY KEY (`amb_id`),
+  UNIQUE KEY `amb_reg_no` (`amb_reg_no`),
+  KEY `amb_hos_id` (`amb_hos_id`),
+  CONSTRAINT `AmbulanceDetails_ibfk_1` FOREIGN KEY (`amb_hos_id`) REFERENCES `hospitalService` (`hos_id`)
+);
+
+hospitalService
+
+CREATE TABLE `hospitalService` (
+  `hos_id` int NOT NULL AUTO_INCREMENT,
+  `hos_name` char(20) NOT NULL,
+  `hos_contact` char(20) NOT NULL,
+  `hos_pwd` char(15) NOT NULL,
+  `hos_username` varchar(15) NOT NULL,
+  `location_id` int DEFAULT NULL,
+  PRIMARY KEY (`hos_id`),
+  UNIQUE KEY `hos_username` (`hos_username`),
+  KEY `FK_location` (`location_id`),
+  CONSTRAINT `FK_location` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`)
+);
+
+locations
+
+CREATE TABLE `locations` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) NOT NULL,
+  `lat` float(10,6) NOT NULL,
+  `lon` float(10,6) NOT NULL,
+  `description` text NOT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `state` varchar(50) DEFAULT NULL,
+  `street` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+patientRoom
+
+CREATE TABLE `patientRoom` (
+  `pr_id` int NOT NULL AUTO_INCREMENT,
+  `pat_id` int NOT NULL,
+  `msg` varchar(200) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `hos_id` int NOT NULL,
+  `msg_status` enum('acknowledged','pending','declined') NOT NULL,
+  `admitted_patient` varchar(50) DEFAULT NULL,
+  `amb_id` int NOT NULL,
+  PRIMARY KEY (`pr_id`),
+  KEY `FK_Patient` (`pat_id`),
+  KEY `FK_Service` (`hos_id`),
+  KEY `patientRoom` (`amb_id`),
+  CONSTRAINT `FK_Patient` FOREIGN KEY (`pat_id`) REFERENCES `patients` (`pat_id`),
+  CONSTRAINT `FK_Service` FOREIGN KEY (`hos_id`) REFERENCES `hospitalService` (`hos_id`),
+  CONSTRAINT `patientRoom_ibfk_1` FOREIGN KEY (`amb_id`) REFERENCES `AmbulanceDetails` (`amb_id`)
+);
+
+patients
+
+CREATE TABLE `patients` (
+  `pat_id` int NOT NULL AUTO_INCREMENT,
+  `pat_name` varchar(50) NOT NULL,
+  `pat_pwd` char(15) NOT NULL,
+  `pat_email_id` varchar(100) NOT NULL,
+  `pat_ph_no` char(20) NOT NULL,
+  `pat_age` int NOT NULL,
+  `pat_gender` enum('m','f','t') NOT NULL,
+  `pat_username` varchar(15) NOT NULL,
+  `pat_status` enum('Disabled','Enable') NOT NULL,
+  PRIMARY KEY (`pat_id`),
+  UNIQUE KEY `pat_username` (`pat_username`)
+);

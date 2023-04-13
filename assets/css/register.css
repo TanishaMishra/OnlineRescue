@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+body {
+  font-family: 'Lato', sans-serif !important;
+  background-image: url(../images/background.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  height: 36rem;
+  width: 26rem;
+  margin: 0 4rem;
+  box-sizing: border-box;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+.info {
+  margin: 0;
+  font-size: 16px;
+  font-weight: normal;
+  text-align: center;
+}
+
+.header {
+  text-align: center;
+}
+
+.card input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+}
+
+.grp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.grp input {
+  width: 50%;
+  margin-right: 1rem;
+}
+
+.grp select {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+}
+
+.card button {
+  border: none;
+  border-radius: 8px;
+  background-color: #6c63ff;
+  padding: 0.5rem 2rem;
+  font-weight: bold;
+  color: white;
+  width: 100%;
+  font-size: 16px;
+  cursor: pointer;
+}
