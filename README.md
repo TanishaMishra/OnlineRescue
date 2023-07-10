@@ -1,2 +1,2 @@
-# Webulance
+# OnlineRescue
 OSP project
